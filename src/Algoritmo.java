@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -16,14 +17,18 @@ class Algoritmo {
      */
     Algoritmo(String x, String y, boolean traza) {
         solucion = new ArrayList<>();
-        int n = x.length();
-        int m = y.length();
+        int n = x.length() + 1;
+        int m = y.length() + 1;
 
         // Inicio del calculo.
-        int[][] tabla = DistanciaEdicion(x, y, n, m, new int[n][m], traza);
+        int[][] tabla = DistanciaEdicion(x, y, n - 1, m - 1, new int[n][m], traza);
+
+        System.out.println(Arrays.deepToString(tabla));
+
         List<Transformacion> transformaciones = setTrans(x, y, n, m, tabla, new ArrayList<>(), traza);
 
         solucion.add(String.valueOf(tabla[n - 1][m - 1]));
+
         for (Transformacion trans : transformaciones) {
             solucion.add(trans.getOperacion() + " " + trans.getPosicion() + " " + trans.getX());
         }
@@ -41,19 +46,19 @@ class Algoritmo {
      */
     private int[][] DistanciaEdicion(String x, String y, int n, int m, int[][] c, boolean traza) {
 
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i <= n; i++) {
             c[i][0] = i;
         }
 
-        for (int j = 0; j < m; j++) {
+        for (int j = 0; j <= m; j++) {
             c[0][j] = j;
         }
 
-        for (int i = 1; i < n; i++) {
-            for (int j = 1; j < m; j++) {
+        for (int i = 1; i < n + 1; i++) {
+            for (int j = 1; j < m + 1; j++) {
                 int tmp = Math.min(1 + c[i - 1][j], 1 + c[i][j - 1]);
 
-                if (x.charAt(i) == y.charAt(j)) {
+                if (x.charAt(i - 1) == y.charAt(j - 1)) {
                     c[i][j] = Math.min(tmp, c[i - 1][j - 1]);
                 } else {
                     c[i][j] = Math.min(tmp, c[i - 1][j - 1] + 1);
@@ -80,14 +85,14 @@ class Algoritmo {
             }
 
             if (j > 0 && c[i][j] == c[i][j - 1] + 1) {
-                x = x.substring(0, j) + y.charAt(j) + x.substring(j);
+                x = x.substring(0, j - 1) + y.charAt(j - 1) + x.substring(j - 1);
                 trans.add(new Transformacion("insercion", j + 1, x));
                 k = k - 1;
                 j = j - 1;
             }
 
             if (i > 0 && j > 0 && c[i][j] == c[i - 1][j - 1] + 1) {
-                x = x.substring(0, j) + y.charAt(j) + x.substring(j + 1);
+                x = x.substring(0, j - 1) + y.charAt(j - 1) + x.substring(j);
                 trans.add(new Transformacion("sustitucion", j + 1, x));
                 k = k - 1;
                 i = i - 1;
