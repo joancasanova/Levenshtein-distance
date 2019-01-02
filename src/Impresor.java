@@ -9,6 +9,9 @@ import java.util.List;
  * Encargado de imprimir en pantalla o de crear un archivo de impresion
  *
  * @author Juan Francisco Casanova Ferrer
+ * teléfono: 625803490
+ * email:    juancasanovaferrer@gmail.com
+ * Programación y Estructuras de Datos Avanzadas - UNED - Centro Asociado Las Tablas
  */
 final class Impresor {
 
@@ -32,6 +35,8 @@ final class Impresor {
         System.out.println("_______________________________________________________________________");
         System.out.println("SINTAXIS:");
         System.out.println("java edicion [-t] [-h] [fichero_entrada] [fichero_salida]");
+        System.out.println("o");
+        System.out.println("java –jar edicion.jar [-t][-h] [fichero_entrada] [fichero_salida]");
         System.out.println("_______________________________________________________________________");
         System.out.println("ARGUMENTOS:");
         System.out.println("-t                          Traza la seleccion de operaciones");

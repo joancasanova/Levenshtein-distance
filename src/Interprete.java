@@ -7,6 +7,9 @@ import java.util.Scanner;
  * Interprete de datos de entrada
  *
  * @author Juan Francisco Casanova Ferrer
+ * teléfono: 625803490
+ * email:    juancasanovaferrer@gmail.com
+ * Programación y Estructuras de Datos Avanzadas - UNED - Centro Asociado Las Tablas
  */
 class Interprete {
     private String x;
@@ -18,7 +21,7 @@ class Interprete {
     Interprete() {
 
         System.out.println();
-        System.out.println("No se ha detectado un archivo de entrada, procedemos a la entrada de datos por consola");
+        System.out.println("Procedemos a la entrada de datos por consola");
 
         Scanner scanner = new Scanner(System.in);
 
@@ -54,7 +57,9 @@ class Interprete {
         }
 
         if (encontrarError(x, y)) {
-            throw new IllegalArgumentException("Error: El formato del archivo de datos de entrada no es compatible");
+            System.err.println("Error: El formato del archivo de datos de entrada no es compatible");
+            System.err.println("Atencion: Corrija los errores del archivo de entrada e invoque de nuevo el programa");
+            System.exit(0);
         }
     }
 

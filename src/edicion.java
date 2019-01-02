@@ -7,6 +7,9 @@ import java.io.IOException;
  * Controla el orden de ejecucion del programa
  *
  * @author Juan Francisco Casanova Ferrer
+ * teléfono: 625803490
+ * email:    juancasanovaferrer@gmail.com
+ * Programación y Estructuras de Datos Avanzadas - UNED - Centro Asociado Las Tablas
  */
 class edicion {
     private boolean help = false;
@@ -16,7 +19,6 @@ class edicion {
 
     /**
      * @param argumentos Argumentos pasados por el ususario al iniciar el programa
-     * @throws IOException Si no se localiza el archivo de entrada
      */
     private edicion(String[] argumentos) throws IOException {
 
@@ -88,6 +90,8 @@ class edicion {
      */
     private Interprete setInterprete() throws IOException {
         if (archivoEntrada == null || !new File(archivoEntrada).exists()) {
+            System.out.println();
+            System.out.println("No se ha encontrado el archivo de entrada");
             return new Interprete();
         } else {
             return new Interprete(archivoEntrada);
@@ -104,7 +108,8 @@ class edicion {
             if (!new File(archivoSalida).exists()) {
                 Impresor.archivoSalida(archivoSalida, algoritmo.getSolucion());
             } else {
-                System.err.println("Error: el archivo de salida ya existe");
+                System.err.println("Atencion: El archivo de salida ya existe, procedemos a imprimir el resultado por pantalla");
+                Impresor.imprimirSolucion(algoritmo.getSolucion());
             }
         } else {
             Impresor.imprimirSolucion(algoritmo.getSolucion());

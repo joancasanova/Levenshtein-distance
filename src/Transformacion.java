@@ -1,15 +1,15 @@
-public class Transformacion {
+/**
+ * Clase que representa una transformación hecha por el algoritmo
+ *
+ * @author Juan Francisco Casanova Ferrer
+ * teléfono: 625803490
+ * email:    juancasanovaferrer@gmail.com
+ * Programación y Estructuras de Datos Avanzadas - UNED - Centro Asociado Las Tablas
+ */
+class Transformacion {
     private String operacion;
     private int posicion;
-    private char caracter;
     private String x;
-
-    Transformacion(String operacion, int posicion, char caracter, String x) {
-        this.operacion = operacion;
-        this.posicion = posicion;
-        this.caracter = caracter;
-        this.x = x;
-    }
 
     Transformacion(String operacion, int posicion, String x) {
         this.operacion = operacion;
@@ -17,19 +17,15 @@ public class Transformacion {
         this.x = x;
     }
 
-    public String getOperacion() {
+    String getOperacion() {
         return operacion;
     }
 
-    public int getPosicion() {
+    int getPosicion() {
         return posicion;
     }
 
-    public char getCaracter() {
-        return caracter;
-    }
-
-    public String getX() {
+    String getX() {
         return x;
     }
 }
