@@ -76,7 +76,7 @@ class edicion {
         Interprete interprete = setInterprete();
 
         // Se realizan las operaciones del algoritmo
-        Algoritmo algoritmo = new Algoritmo(interprete.getX(), interprete.getY(), traza);
+        Algoritmo algoritmo = new Algoritmo(new StringBuilder(interprete.getX()), new StringBuilder(interprete.getY()), traza);
 
         // Se muestran los resultados
         mostrarResultados(algoritmo);

@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -18,7 +17,7 @@ class Algoritmo {
      * @param x Cadena de caracteres inicial
      * @param y Cadena de caracteres objetivo
      */
-    Algoritmo(String x, String y, boolean traza) {
+    Algoritmo(StringBuilder x, StringBuilder y, boolean traza) {
         solucion = new ArrayList<>();
         int n = x.length() + 1;
         int m = y.length() + 1;
@@ -47,7 +46,7 @@ class Algoritmo {
      * @param c     Tabla que alberga el numero de operaciones minimas para transformar X en Y y los pasos intermedios
      * @param traza Valor booleano que indica si deseamos mostrar la traza o no
      */
-    private int[][] DistanciaEdicion(String x, String y, int n, int m, int[][] c, boolean traza) {
+    private int[][] DistanciaEdicion(StringBuilder x, StringBuilder y, int n, int m, int[][] c, boolean traza) {
 
         if (traza) {
             System.out.println();
@@ -55,13 +54,13 @@ class Algoritmo {
         }
 
         // Inicializamos la primera columna
-        for (int k = 0; k <= n; k++) {
-            c[k][0] = k;
+        for (int i = 0; i <= n; i++) {
+            c[i][0] = i;
         }
 
         // Inicializamos la primera fila
-        for (int k = 0; k <= m; k++) {
-            c[0][k] = k;
+        for (int j = 0; j <= m; j++) {
+            c[0][j] = j;
         }
 
         if (traza) {
@@ -84,7 +83,13 @@ class Algoritmo {
                     System.out.println();
                     System.out.println("Introducir " + c[i][j] + " en fila " + i + ", columna " + j);
                     System.out.println("Tabla:");
-                    System.out.println(Arrays.deepToString(c));
+                    for (int p = 0; p <= n; p++) {
+                        for (int q = 0; q <= m; q++) {
+                            System.out.print(c[p][q]);
+                            System.out.print(" ");
+                        }
+                        System.out.println();
+                    }
                 }
             }
         }
@@ -95,7 +100,7 @@ class Algoritmo {
     /**
      * Algoritmo para obtener los cambios realizados
      */
-    private List<Transformacion> setTrans(String x, String y, int n, int m, int[][] c, List<Transformacion> trans, boolean traza) {
+    private List<Transformacion> setTrans(StringBuilder x, StringBuilder y, int n, int m, int[][] c, List<Transformacion> trans, boolean traza) {
 
         if (traza) {
             System.out.println();
@@ -103,52 +108,34 @@ class Algoritmo {
             System.out.println();
         }
 
-        int i = n;
-        int j = m;
-        int k = c[n][m];
+        int i = n - 1;
+        int j = m - 1;
+        int k = c[n - 1][m - 1];
 
         while (k > 0) {
 
             if (traza) {
-                System.out.println("Analizado transformaciones... Fila " + i + ", Columna" + j);
+                System.out.println("Analizado transformaciones... Fila " + i + ", Columna " + j);
             }
 
             if (i > 0 && c[i][j] == c[i - 1][j] + 1) {
-                if (j == 0) {
-                    x = x.substring(0, j);
-                } else {
-                    x = x.substring(0, j) + x.substring(j + 1);
-                }
-                trans.add(new Transformacion("borrado", j, x));
+                x.deleteCharAt(i - 1);
+                trans.add(new Transformacion("borrado", i, x.toString()));
                 k = k - 1;
                 i = i - 1;
-            }
-
-            if (j > 0 && c[i][j] == c[i][j - 1] + 1) {
-                if (j < x.length()) {
-                    x = x.substring(0, j) + y.charAt(j) + x.substring(j + 1);
-                } else {
-                    x = x.substring(0, j) + y.charAt(j);
-
-                }
-                trans.add(new Transformacion("insercion", j - 1, x));
+            } else if (j > 0 && c[i][j] == c[i][j - 1] + 1) {
+                x.insert(i, y.charAt(j - 1));
+                trans.add(new Transformacion("insercion", j, x.toString()));
                 k = k - 1;
                 j = j - 1;
-            }
-
-            if (i > 0 && j > 0 && c[i][j] == c[i - 1][j - 1] + 1) {
-                if (x.length() >= j) {
-                    x = x.substring(0, j - 1) + y.charAt(j - 1) + x.substring(j);
-                } else {
-                    x = x.substring(0, j - 1) + y.charAt(j - 1);
-                }
-                trans.add(new Transformacion("sustitucion", j - 1, x));
+            } else if (i > 0 && j > 0 && c[i][j] == c[i - 1][j - 1] + 1) {
+                x.deleteCharAt(i - 1);
+                x.insert(i - 1, y.charAt(j - 1));
+                trans.add(new Transformacion("sustitucion", j, x.toString()));
                 k = k - 1;
                 i = i - 1;
                 j = j - 1;
-            }
-
-            if (i > 0 && j > 0 && c[i][j] == c[i - 1][j - 1]) {
+            } else if (i > 0 && j > 0 && c[i][j] == c[i - 1][j - 1]) {
                 i = i - 1;
                 j = j - 1;
             }
